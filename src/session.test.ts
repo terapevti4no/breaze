@@ -6,18 +6,18 @@ import { presets } from './presets.ts';
 test('countdown runs once and zero holds are skipped without a zero-second frame', () => {
   const s = { ...defaults, cycles: 2, countdown: 3 };
   assert.equal(frameAt(2999, s).phase, 'countdown');
-  assert.deepEqual(frameAt(3000, s), { phase: 'inhale', cycle: 1, remaining: 5000, progress: 0 });
-  assert.equal(frameAt(7999, s).phase, 'inhale');
-  assert.equal(frameAt(8000, s).phase, 'exhale');
-  assert.deepEqual(frameAt(13000, s), { phase: 'inhale', cycle: 2, remaining: 5000, progress: 0 });
-  assert.equal(frameAt(23000, s).phase, 'done');
+  assert.deepEqual(frameAt(3000, s), { phase: 'inhale', cycle: 1, remaining: 6000, progress: 0 });
+  assert.equal(frameAt(8999, s).phase, 'inhale');
+  assert.equal(frameAt(9000, s).phase, 'exhale');
+  assert.deepEqual(frameAt(15000, s), { phase: 'inhale', cycle: 2, remaining: 6000, progress: 0 });
+  assert.equal(frameAt(27000, s).phase, 'done');
 });
 
 test('all four box phases have exact boundaries, including the final exhale hold', () => {
   const s = { ...defaults, ...presets[2].rhythm, countdown: 0, cycles: 1 };
   assert.equal(frameAt(0, s).phase, 'inhale');
   assert.equal(frameAt(4000, s).phase, 'holdIn');
-  assert.equal(frameAt(8000, s).phase, 'exhale');
+  assert.equal(frameAt(9000, s).phase, 'exhale');
   assert.equal(frameAt(12000, s).phase, 'holdOut');
   assert.equal(frameAt(15999, s).phase, 'holdOut');
   assert.equal(frameAt(16000, s).phase, 'done');
@@ -65,12 +65,12 @@ test('pausing during countdown or a breath phase resumes the same remainder', ()
   c.setPaused(false, 60000);
   assert.equal(frameAt(c.advance(61250), s).phase, 'inhale');
   c.setPaused(true, 62000);
-  assert.equal(frameAt(c.advance(100000), s).remaining, 4250);
+  assert.equal(frameAt(c.advance(100000), s).remaining, 5250);
 });
 
 test('only holds and pre-start countdown accept zero; malformed saved values are bounded', () => {
   assert.deepEqual(sanitize({ inhale: 0, exhale: -3, holdIn: 0, holdOut: 0, cycles: 0, countdown: 0 }), { inhale: 1, exhale: 1, holdIn: 0, holdOut: 0, cycles: 1, countdown: 0 });
   assert.deepEqual(sanitize(null), defaults);
   const s = sanitize({ inhale: Infinity, exhale: NaN, cycles: 100000, countdown: -1, holdIn: 1000, holdOut: 1.8 });
-  assert.equal(s.inhale, 5); assert.equal(s.exhale, 5); assert.equal(s.cycles, 100); assert.equal(s.countdown, 0); assert.equal(s.holdIn, 60); assert.equal(s.holdOut, 2);
+  assert.equal(s.inhale, 6); assert.equal(s.exhale, 6); assert.equal(s.cycles, 100); assert.equal(s.countdown, 0); assert.equal(s.holdIn, 60); assert.equal(s.holdOut, 2);
 });

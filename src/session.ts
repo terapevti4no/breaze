@@ -4,7 +4,7 @@ export interface Rhythm { inhale: number; holdIn: number; exhale: number; holdOu
 export interface Settings extends Rhythm { cycles: number; countdown: number }
 export const phaseOrder: BreathPhase[] = ['inhale', 'holdIn', 'exhale', 'holdOut'];
 export const limits = { inhale: [1, 60], holdIn: [0, 60], exhale: [1, 60], holdOut: [0, 60], cycles: [1, 100], countdown: [0, 120] } as const;
-export const defaults: Settings = { inhale: 5, holdIn: 0, exhale: 5, holdOut: 0, cycles: 4, countdown: 5 };
+export const defaults: Settings = { inhale: 6, holdIn: 0, exhale: 6, holdOut: 0, cycles: 4, countdown: 5 };
 export function sanitize(input: unknown): Settings {
   const value = input && typeof input === 'object' ? input as Record<string, unknown> : {};
   const result = { ...defaults };

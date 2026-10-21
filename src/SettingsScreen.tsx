@@ -28,13 +28,17 @@ export default function SettingsScreen({ settings, setSettings, lang, setLang, t
         <span className="preset-description">{preset.copy[lang].description}</span>
         <span className="preset-bottom"><span className="rhythm">{phaseOrder.map(phase => preset.rhythm[phase]).join(' · ')}</span><span>{t.total}: {cycleDuration(preset.rhythm) * settings.cycles / 1000} {t.sec}</span></span>
       </button>)}</div>
-      <button className="custom-choice ui-card" type="button" data-start="custom" aria-expanded={customOpen} aria-controls="custom-settings" onClick={() => setCustomOpen(open => !open)}>
-        <span><strong>{t.custom}</strong><span>{t.customDescription}</span></span><span className="custom-action">{t.customize}<Icon name="arrow"/></span>
-      </button>
-      <form id="custom-settings" className="custom-settings ui-card" hidden={!customOpen} onSubmit={event => { event.preventDefault(); start(settings, t.custom, 'custom'); }}>
-        <div className="rhythm-fields">{phaseOrder.map(phase => <div key={phase}>{field(phase, t[phase])}</div>)}</div>
-        <p className="zero-hint">{t.zeroHint}</p><button type="submit" className="primary">{t.start}<Icon name="arrow"/></button>
-      </form>
+      <div className={`custom-choice ui-card${customOpen ? ' is-open' : ''}`}>
+        <div className="custom-heading"><div><strong>{t.custom}</strong><p>{t.customDescription}</p></div>
+          <button className="custom-action" type="button" aria-expanded={customOpen} aria-controls="custom-settings" onClick={() => setCustomOpen(open => !open)}>{t.customize}<Icon name="arrow"/></button>
+        </div>
+        <div className="custom-summary"><span className="rhythm">{phaseOrder.map(phase => settings[phase]).join(' · ')}</span><span>{t.total}: {cycleDuration(settings) * settings.cycles / 1000} {t.sec}</span></div>
+        <form id="custom-settings" className="custom-settings" hidden={!customOpen} onSubmit={event => { event.preventDefault(); start(settings, t.custom, 'custom'); }}>
+          <div className="rhythm-fields">{phaseOrder.map(phase => <div key={phase}>{field(phase, t[phase])}</div>)}</div>
+          <p className="zero-hint">{t.zeroHint}</p>
+        </form>
+        <button type="submit" form="custom-settings" className="primary custom-start" data-start="custom">{t.start}<Icon name="arrow"/></button>
+      </div>
     </section>
     <InfoNote>{t.note}</InfoNote>
   </PageLayout>;
