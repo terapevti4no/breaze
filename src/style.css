@@ -29,3 +29,13 @@
 @media(max-height:950px){.session-options{margin-bottom:18px}.preset-card{gap:9px}}
 @media(pointer:coarse){.number-wrap input{font-size:16px}.practice-controls button{min-height:44px;min-width:100px}.practice-controls small{display:none}.practice-controls{bottom:max(16px,env(safe-area-inset-bottom));gap:8px}.practice-message{padding-bottom:110px}}
 @media(max-height:500px){.practice-message{padding:12px 20px 86px}.practice-message .eyebrow{margin-bottom:6px}.practice-message h1{font-size:24px;margin-bottom:0}.count-number{font-size:64px;line-height:1.1}.cycle-label,.pause-status{margin:2px 0 0}.practice-controls{bottom:10px;gap:4px}.practice-message .primary{margin-top:14px}}
+
+.breathing-visual{position:relative;display:grid;place-items:center;width:min(82vw,360px,46svh);aspect-ratio:1;margin:16px 0;container-type:inline-size}
+.breathing-orb{position:absolute;inset:0;border-radius:50%;pointer-events:none;background:var(--accent);opacity:.16;transform:scale(.48);will-change:transform}
+.breathing-caption{position:absolute;inset:0}
+.practice-message .breathing-caption h1{position:absolute;bottom:calc(50% + 11cqw);left:50%;transform:translateX(-50%);width:max-content;max-width:37cqw;white-space:nowrap;font-size:4.5cqw;font-weight:500;letter-spacing:0;line-height:1.2;margin:0;color:var(--accent)}
+.breathing-visual .count-number{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:20cqw;line-height:1}
+@media(max-height:500px){.breathing-visual{width:min(42svh,240px);margin:6px 0}}
+@media(prefers-reduced-motion:reduce){.breathing-orb{transform:scale(.8)!important;will-change:auto}}
+
+.practice-message .breathing-caption h1{color:color-mix(in srgb,var(--accent) 65%,var(--bg))}
